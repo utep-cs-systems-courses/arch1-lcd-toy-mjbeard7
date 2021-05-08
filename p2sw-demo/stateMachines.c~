@@ -1,0 +1,26 @@
+#include <msp430.h>
+#include "stateMachines.h"
+//#include "buzzer.h"
+//#include "switches.h"
+
+void state_advance()		/* alternate between toggling red & green */
+{
+  char changed = 0;
+
+
+  static char state = 0;
+
+  /* switch(state){
+  case 0: red_on = 0; green_on = 1; state++; break;
+  default: state = 0;
+  }*/
+  
+  //led_changed = 1;
+  //led_update();
+}
+/*void buzzer_state_advance(){
+  static char buzz_state = 0;
+  static char buzz_state_2 = 0;
+  switch(buzz_state) {
+  case 0: buzzer_set_period(4049); buzz_state++;break;
+  default: buzz_state = 0;*/

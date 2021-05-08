@@ -6,6 +6,7 @@
 #include <lcdutils.h>
 #include <lcddraw.h>
 #include <p2switches.h>
+#include <stateMachines.h>
 
 
 /** Initializes everything, clears the screen, draws "hello" and the circle */
@@ -14,7 +15,7 @@ void main()
   configureClocks();
   lcd_init();
   p2sw_init(15);
-  or_sr(0x8);			/* GIE (enable interrupts) */
+  or_sr(0x8);			/* CPU off, GIE on (enable interrupts) */
   u_char width = screenWidth, height = screenHeight;
 
   clearScreen(COLOR_BLUE);
@@ -23,9 +24,12 @@ void main()
   while (1) {
     u_int switches = p2sw_read(), i;
     char str[5];
+    char stateFlags = 0; //by default switches are off
     for (i = 0; i < 4; i++)
-      str[i] = (switches & (1<<i)) ? '-' : '0'+i;
+     str[i] = (switches & (1<<i)) ? '-' : '0'+i;
     str[4] = 0;
+
     drawString5x7(20,20, str, COLOR_GREEN, COLOR_BLUE);
+    // fillRectangle(20,20,30,30, color[i]);
   } 
 }

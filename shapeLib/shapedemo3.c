@@ -11,7 +11,7 @@ abSlicedRectCheck(const AbRect *rect, const Vec2 *centerPos, const Vec2 *pixel)
   vec2Sub(&relPos, pixel, centerPos); /* vector from center to pixel */
 
   /* reject pixels in slice */
-  if (relPos.axes[0] >= 0 && relPos.axes[0]/2 < relPos.axes[1]) 
+  if (relPos.axes[0] >= 0 && relPos.axes[0]/10 < relPos.axes[1]) 
     return 0;
   else
     return abRectCheck(rect, centerPos, pixel);

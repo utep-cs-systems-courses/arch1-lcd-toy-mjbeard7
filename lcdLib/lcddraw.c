@@ -93,8 +93,38 @@ void drawString5x7(u_char col, u_char row, char *string,
     cols += 6;
   }
 }
+/** 8x12 font - this function draws background pixels
+ */
+void drawChar8x12(u_char rcol, u_char rrow, char c, 
+     u_int fgColorBGR, u_int bgColorBGR) 
+{
+  u_char col = 0;
+  u_char row = 0;
+  u_char bit = 0x01;
+  u_char oc = c - 0x20;
 
+  lcd_setArea(rcol, rrow, rcol + 9, rrow + 13); /* relative to requested col/row */
+  while (row < 12) {
+    while (col < 10) {
+      u_int colorBGR = (font_8x12[oc][col] & bit) ? fgColorBGR : bgColorBGR;
+      lcd_writeColor(colorBGR);
+      col++;
+    }
+    col = 0;
+    bit <<= 1;
+    row++;
+  }
+}
 
+void drawString8x12(u_char col, u_char row, char *string,
+		u_int fgColorBGR, u_int bgColorBGR)
+{
+  u_char cols = col;
+  while (*string) {
+    drawChar8x12(cols, row, *string++, fgColorBGR, bgColorBGR);
+    cols += 13;
+  }
+}
 /** Draw rectangle outline
  *  
  *  \param colMin Column start

@@ -2,14 +2,21 @@
 #include "lcdutils.h"
 #include "lcddraw.h"
 #include "shape.h"
+#include "abCircle.h"
 
 AbRect rect10 = {abRectGetBounds, abRectCheck, 10,10};
 AbRArrow arrow30 = {abRArrowGetBounds, abRArrowCheck, 30};
-
+//AbCircle circle14 = {abCircleGetBounds, abCircleCheck, 14};
 
 Region fence = {{10,30}, {SHORT_EDGE_PIXELS-10, LONG_EDGE_PIXELS-10}};
 
-
+Layer layer3 = {
+  (AbShape *)&circle14,
+  {screenWidth/2+40, screenHeight/2+10}, 	    /* position */
+  {0,0}, {0,0},				    /* last & next pos */
+  COLOR_GREEN,
+  0,
+};
 Layer layer2 = {
   (AbShape *)&arrow30,
   {screenWidth/2+40, screenHeight/2+10}, 	    /* position */

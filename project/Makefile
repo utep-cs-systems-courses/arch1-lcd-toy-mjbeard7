@@ -10,7 +10,7 @@ AS              = msp430-elf-gcc -mmcu=${CPU} -c
 all:wakedemo.elf
 
 #additional rules for files
-wakedemo.elf: ${COMMON_OBJECTS} LCDtoy.o wdt_handler.o p2switches.o 
+wakedemo.elf: ${COMMON_OBJECTS} LCDtoy.o wdt_handler.o p2switches.o stateMachines.o 
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
 
 load: wakedemo.elf

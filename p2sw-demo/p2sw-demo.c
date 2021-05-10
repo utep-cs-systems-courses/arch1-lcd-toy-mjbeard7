@@ -6,7 +6,7 @@
 #include <lcdutils.h>
 #include <lcddraw.h>
 #include <p2switches.h>
-#include <stateMachines.h>
+//#include <stateMachines.h>
 
 
 /** Initializes everything, clears the screen, draws "hello" and the circle */

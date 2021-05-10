@@ -9,11 +9,14 @@ CC              = msp430-elf-gcc
 AS              = msp430-elf-as
 AR              = msp430-elf-ar
 
-p2sw-demo.elf: p2sw-demo.o stateMachines.o 
+p2sw-demo.elf: p2sw-demo.o stateMachines.o stateMachines.h 
 	$(CC) $(CFLAGS) ${LDFLAGS} -o $@ $^ -lLcd -lp2sw -lTimer
+
+
 
 clean:
 	rm -f *.a *.o *.elf
 
 load: p2sw-demo.elf
 	msp430loader.sh $^
+

@@ -8,9 +8,10 @@
 short redrawScreen = 1;
 u_int changingColor4 = COLOR_BLUE;
 u_int coordinates_x = 5;
+ int count = 0;
+ int state = 1;
 void wdt_c_handler(){
-  static int count = 0;
-  static int state = 1;
+ 
   
   count ++;
 switch (state){
@@ -36,7 +37,6 @@ switch (state){
     coordinates_x = (coordinates_x == 5) ? 5: 5;
     changingColor4= (changingColor4 == COLOR_YELLOW) ? COLOR_RED : COLOR_BLUE;
     redrawScreen = 1;
-    count = 0;
     state = 1;
     }
     break;

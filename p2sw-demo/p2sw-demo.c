@@ -6,7 +6,7 @@
 #include <lcdutils.h>
 #include <lcddraw.h>
 #include <p2switches.h>
-//#include <stateMachines.h>
+#include <stateMachines.h>
 
 
 /** Initializes everything, clears the screen, draws "hello" and the circle */
@@ -24,12 +24,17 @@ void main()
   while (1) {
     u_int switches = p2sw_read(), i;
     char str[5];
-    char stateFlags = 0; //by default switches are off
+    u_int colorState = COLOR_BLUE; //by default switches are off
     for (i = 0; i < 4; i++)
-     str[i] = (switches & (1<<i)) ? '-' : '0'+i;
+     str[i] = (switches & (1<<i)) ? '-' : '0'+str[i];
+  
+    if (i==BIT0)
+     fillRectangle(70,80,30,30, COLOR_GREEN);
     str[4] = 0;
-
     drawString5x7(20,20, str, COLOR_GREEN, COLOR_BLUE);
-    // fillRectangle(20,20,30,30, color[i]);
+    
+     
+    colorState = (colorState == COLOR_BLUE) ? COLOR_BLACK : COLOR_BLUE;
+       
   } 
 }

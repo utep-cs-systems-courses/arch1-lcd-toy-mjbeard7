@@ -1,0 +1,1574 @@
+student@systems-vm:~> cd arch1-lcd-toy-mjbeard7/
+student@systems-vm:~/arch1-lcd-toy-mjbeard7> make clean
+(cd timerLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+rm -f timerLib.a *.o
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+(cd lcdLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+Makefile:35: warning: overriding recipe for target 'load'
+Makefile:32: warning: ignoring old recipe for target 'load'
+rm -f libLcd.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+(cd shapeLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+rm -f libShape.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+(cd p2swLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+rm -f *.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+(cd p2sw-demo; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+rm -f *.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+(cd shape-motion-demo; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/shape-motion-demo'
+rm -f *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/shape-motion-demo'
+(cd circleLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+rm -f libCircle.a abCircle.h abCircle_decls.h chordVec.h *.o *.elf makeCircles
+rm -rf circles
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+(cd project; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/project'
+rm -f *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/project'
+rm -rf lib h
+rm -rf doxygen_docs/*
+student@systems-vm:~/arch1-lcd-toy-mjbeard7> make 
+(cd timerLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os   -c -o clocksTimer.o clocksTimer.c
+msp430-elf-as   -o sr.o sr.s
+msp430-elf-ar crs libTimer.a clocksTimer.o sr.o
+mkdir -p ../h ../lib
+mv libTimer.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+(cd lcdLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+Makefile:35: warning: overriding recipe for target 'load'
+Makefile:32: warning: ignoring old recipe for target 'load'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-11x16.o font-11x16.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-5x7.o font-5x7.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-8x12.o font-8x12.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o lcdutils.o lcdutils.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o lcddraw.o lcddraw.c
+msp430-elf-ar crs libLcd.a font-11x16.o font-5x7.o font-8x12.o lcdutils.o lcddraw.o
+mkdir -p ../h ../lib
+mv libLcd.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+(cd shapeLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o shape.o shape.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o region.o region.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o rect.o rect.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o vec2.o vec2.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o layer.o layer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o rarrow.o rarrow.c
+msp430-elf-ar crs libShape.a shape.o region.o rect.o vec2.o layer.o rarrow.o
+mkdir -p ../h ../lib
+mv libShape.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+(cd circleLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o abCircle.o abCircle.c
+cc -o makeCircles makeCircles.c
+rm -rf circles; mkdir circles
+./makeCircles
+cat _abCircle.h abCircle_decls.h > abCircle.h
+(cd circles; msp430-elf-gcc -I.. -I../../h -mmcu=msp430g2553 -Os -c *.c)
+msp430-elf-ar crs libCircle.a circles/*.o abCircle.o
+mkdir -p ../h ../lib
+cp libCircle.a ../lib
+cp abCircle.h chordVec.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+(cd p2swLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o p2switches.o p2switches.c
+msp430-elf-ar crs libp2sw.a p2switches.o
+mkdir -p ../h ../lib
+mv libp2sw.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+(cd p2sw-demo; make)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c:9:10: fatal error: stateMachines.h: No such file or directory
+ #include <stateMachines.h>
+          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [<builtin>: p2sw-demo.o] Error 1
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+make: *** [Makefile:7: all] Error 2
+student@systems-vm:~/arch1-lcd-toy-mjbeard7> cd p2sw-demo/
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c:9:10: fatal error: stateMachines.h: No such file or directory
+ #include <stateMachines.h>
+          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c:9:10: fatal error: stateMachines.h: No such file or directory
+ #include <stateMachines.h>
+          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c:9:10: fatal error: stateMachines.h: No such file or directory
+ #include "stateMachines.h"
+          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c:9:10: fatal error: stateMachines.h: No such file or directory
+ #include <stateMachines.h>
+          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> cd
+student@systems-vm:~> cd arch1-lcd-toy-mjbeard7/
+student@systems-vm:~/arch1-lcd-toy-mjbeard7> make clean
+(cd timerLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+rm -f timerLib.a *.o
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+(cd lcdLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+Makefile:35: warning: overriding recipe for target 'load'
+Makefile:32: warning: ignoring old recipe for target 'load'
+rm -f libLcd.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+(cd shapeLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+rm -f libShape.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+(cd p2swLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+rm -f *.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+(cd p2sw-demo; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+rm -f *.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+(cd shape-motion-demo; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/shape-motion-demo'
+rm -f *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/shape-motion-demo'
+(cd circleLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+rm -f libCircle.a abCircle.h abCircle_decls.h chordVec.h *.o *.elf makeCircles
+rm -rf circles
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+(cd project; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/project'
+rm -f *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/project'
+rm -rf lib h
+rm -rf doxygen_docs/*
+student@systems-vm:~/arch1-lcd-toy-mjbeard7> make 
+(cd timerLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os   -c -o clocksTimer.o clocksTimer.c
+msp430-elf-as   -o sr.o sr.s
+msp430-elf-ar crs libTimer.a clocksTimer.o sr.o
+mkdir -p ../h ../lib
+mv libTimer.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+(cd lcdLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+Makefile:35: warning: overriding recipe for target 'load'
+Makefile:32: warning: ignoring old recipe for target 'load'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-11x16.o font-11x16.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-5x7.o font-5x7.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-8x12.o font-8x12.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o lcdutils.o lcdutils.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o lcddraw.o lcddraw.c
+msp430-elf-ar crs libLcd.a font-11x16.o font-5x7.o font-8x12.o lcdutils.o lcddraw.o
+mkdir -p ../h ../lib
+mv libLcd.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+(cd shapeLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o shape.o shape.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o region.o region.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o rect.o rect.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o vec2.o vec2.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o layer.o layer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o rarrow.o rarrow.c
+msp430-elf-ar crs libShape.a shape.o region.o rect.o vec2.o layer.o rarrow.o
+mkdir -p ../h ../lib
+mv libShape.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+(cd circleLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o abCircle.o abCircle.c
+cc -o makeCircles makeCircles.c
+rm -rf circles; mkdir circles
+./makeCircles
+cat _abCircle.h abCircle_decls.h > abCircle.h
+(cd circles; msp430-elf-gcc -I.. -I../../h -mmcu=msp430g2553 -Os -c *.c)
+msp430-elf-ar crs libCircle.a circles/*.o abCircle.o
+mkdir -p ../h ../lib
+cp libCircle.a ../lib
+cp abCircle.h chordVec.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+(cd p2swLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o p2switches.o p2switches.c
+msp430-elf-ar crs libp2sw.a p2switches.o
+mkdir -p ../h ../lib
+mv libp2sw.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+(cd p2sw-demo; make)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+make[1]: *** No rule to make target 'stateMachines.h', needed by 'stateMachines.o'.  Stop.
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+make: *** [Makefile:7: all] Error 2
+student@systems-vm:~/arch1-lcd-toy-mjbeard7> make clean
+(cd timerLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+rm -f timerLib.a *.o
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+(cd lcdLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+Makefile:35: warning: overriding recipe for target 'load'
+Makefile:32: warning: ignoring old recipe for target 'load'
+rm -f libLcd.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+(cd shapeLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+rm -f libShape.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+(cd p2swLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+rm -f *.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+(cd p2sw-demo; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+rm -f *.a *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+(cd shape-motion-demo; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/shape-motion-demo'
+rm -f *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/shape-motion-demo'
+(cd circleLib; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+rm -f libCircle.a abCircle.h abCircle_decls.h chordVec.h *.o *.elf makeCircles
+rm -rf circles
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+(cd project; make clean)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/project'
+rm -f *.o *.elf
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/project'
+rm -rf lib h
+rm -rf doxygen_docs/*
+student@systems-vm:~/arch1-lcd-toy-mjbeard7> make
+(cd timerLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os   -c -o clocksTimer.o clocksTimer.c
+msp430-elf-as   -o sr.o sr.s
+msp430-elf-ar crs libTimer.a clocksTimer.o sr.o
+mkdir -p ../h ../lib
+mv libTimer.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/timerLib'
+(cd lcdLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+Makefile:35: warning: overriding recipe for target 'load'
+Makefile:32: warning: ignoring old recipe for target 'load'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-11x16.o font-11x16.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-5x7.o font-5x7.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-8x12.o font-8x12.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o lcdutils.o lcdutils.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o lcddraw.o lcddraw.c
+msp430-elf-ar crs libLcd.a font-11x16.o font-5x7.o font-8x12.o lcdutils.o lcddraw.o
+mkdir -p ../h ../lib
+mv libLcd.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/lcdLib'
+(cd shapeLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o shape.o shape.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o region.o region.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o rect.o rect.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o vec2.o vec2.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o layer.o layer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o rarrow.o rarrow.c
+msp430-elf-ar crs libShape.a shape.o region.o rect.o vec2.o layer.o rarrow.o
+mkdir -p ../h ../lib
+mv libShape.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/shapeLib'
+(cd circleLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o abCircle.o abCircle.c
+cc -o makeCircles makeCircles.c
+rm -rf circles; mkdir circles
+./makeCircles
+cat _abCircle.h abCircle_decls.h > abCircle.h
+(cd circles; msp430-elf-gcc -I.. -I../../h -mmcu=msp430g2553 -Os -c *.c)
+msp430-elf-ar crs libCircle.a circles/*.o abCircle.o
+mkdir -p ../h ../lib
+cp libCircle.a ../lib
+cp abCircle.h chordVec.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/circleLib'
+(cd p2swLib; make install)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o p2switches.o p2switches.c
+msp430-elf-ar crs libp2sw.a p2switches.o
+mkdir -p ../h ../lib
+mv libp2sw.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2swLib'
+(cd p2sw-demo; make)
+make[1]: Entering directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+make[1]: *** No rule to make target 'stateMachines.h', needed by 'stateMachines.o'.  Stop.
+make[1]: Leaving directory '/home/student/arch1-lcd-toy-mjbeard7/p2sw-demo'
+make: *** [Makefile:7: all] Error 2
+student@systems-vm:~/arch1-lcd-toy-mjbeard7> cd p2sw-demo/
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+make: *** No rule to make target 'stateMachines.h', needed by 'stateMachines.o'.  Stop.
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+make: *** No rule to make target 'stateMachines.h', needed by 'p2sw-demo.elf'.  Stop.
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> cd
+student@systems-vm:~> cd arch1-lcd-toy-mjbeard7/p
+bash: cd: arch1-lcd-toy-mjbeard7/p: No such file or directory
+student@systems-vm:~> cd arch1-lcd-toy-mjbeard7/project/
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> make clean
+rm -f *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o LCDtoy.o LCDtoy.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2switches.o p2switches.c
+make: *** No rule to make target 'switches.o', needed by 'wakedemo.elf'.  Stop.
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o wakedemo.elf LCDtoy.o wdt_handler.o p2switches.o stateMachines.o -lTimer -lLcd 
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> git add project
+fatal: pathspec 'project' did not match any files
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> git add /project/
+fatal: Invalid path '/project': No such file or directory
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> git add -A
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> git commit -m "Added stateMachines.c and .h"
+[master 3093d25] Added stateMachines.c and .h
+ 23 files changed, 32 insertions(+), 5 deletions(-)
+ delete mode 100755 circleLib/circledemo.elf
+ delete mode 100644 circleLib/circledemo.o
+ rewrite p2sw-demo/p2sw-demo.o (77%)
+ create mode 100644 p2sw-demo/stateMachines.h
+ create mode 100644 project/stateMachines.c
+ create mode 100644 project/stateMachines.h
+ create mode 100644 project/stateMachines.o
+ delete mode 100644 shapeLib/libShape.a
+ delete mode 100755 shapeLib/shapedemo.elf
+ delete mode 100644 shapeLib/shapedemo.o
+ delete mode 100644 shapeLib/shapedemo2.o
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> git push
+Username for 'https://github.com': mjbeard7
+Password for 'https://mjbeard7@github.com': vGfVSzdb3fi2At4
+
+Counting objects: 20, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (20/20), done.
+Writing objects: 100% (20/20), 5.06 KiB | 739.00 KiB/s, done.
+Total 20 (delta 17), reused 0 (delta 0)
+remote: Resolving deltas: 100% (17/17), completed with 17 local objects.        
+To https://github.com/utep-cs-systems-courses/arch1-lcd-toy-mjbeard7.git
+   30e70d7..3093d25  master -> master
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o wakedemo.elf LCDtoy.o wdt_handler.o p2switches.o stateMachines.o -lTimer -lLcd 
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> make load
+msp430loader.sh wakedemo.elf
+check 
+No valid msp430 devices found! Are you sure the MSP430 is connected to the vm (check lsusb)? 
+make: *** [Makefile:17: load] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> make load
+msp430loader.sh wakedemo.elf
+check Bus 001 Device 005: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  wakedemo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 005
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1636 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c664 [section: .rodata2]...
+Writing 2092 bytes at c668 [section: .text]...
+Writing   10 bytes at ce94 [section: .data]...
+Done, 3748 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> git add p2switches.c
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> git add stateMachines.c
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> git commit -m "added a few libraries to stateMachines.c"
+[master 0481e32] added a few libraries to stateMachines.c
+ 1 file changed, 15 insertions(+), 4 deletions(-)
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> git push
+Username for 'https://github.com': mjbeard7
+Password for 'https://mjbeard7@github.com': vGfVSzdb3fi2At4
+
+Counting objects: 4, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 578 bytes | 578.00 KiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.        
+To https://github.com/utep-cs-systems-courses/arch1-lcd-toy-mjbeard7.git
+   3093d25..0481e32  master -> master
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/project> cd
+student@systems-vm:~> cd arch1-lcd-toy-mjbeard7/p2sw-demo/
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> makeload
+If 'makeload' is not a typo you can use command-not-found to lookup the package that contains it, like this:
+    cnf makeload
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1624 bytes at c664 [section: .text]...
+Done, 3262 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1646 bytes at c664 [section: .text]...
+Done, 3284 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1648 bytes at c664 [section: .text]...
+Done, 3286 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:32:33: error: 'COLOR_Blue' undeclared (first use in this function); did you mean 'COLOR_BLUE'?
+     colorState = (colorState == COLOR_Blue) ? COLOR_BLACK : COLOR_BLUE;
+                                 ^~~~~~~~~~
+                                 COLOR_BLUE
+p2sw-demo.c:32:33: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1646 bytes at c664 [section: .text]...
+Done, 3284 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1666 bytes at c664 [section: .text]...
+Done, 3304 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:33:9: error: 'switches' undeclared (first use in this function)
+     if (switches == 1)
+         ^~~~~~~~
+p2sw-demo.c:33:9: note: each undeclared identifier is reported only once for each function it appears in
+p2sw-demo.c:34:5: error: 'colorState' undeclared (first use in this function); did you mean 'colors'?
+     colorState = (colorState == COLOR_BLUE) ? COLOR_BLACK : COLOR_BLUE;
+     ^~~~~~~~~~
+     colors
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> makeclean
+If 'makeclean' is not a typo you can use command-not-found to lookup the package that contains it, like this:
+    cnf makeclean
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make 
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:34:10: error: 'j' undeclared (first use in this function)
+     for (j = 0; j < 4; j++)
+          ^
+p2sw-demo.c:34:10: note: each undeclared identifier is reported only once for each function it appears in
+p2sw-demo.c:35:15: error: expected ';' before ']' token
+       state[j] ] switches & (1<<i));
+               ^~
+               ;
+p2sw-demo.c:35:16: error: expected statement before ']' token
+       state[j] ] switches & (1<<i));
+                ^
+p2sw-demo.c:35:35: error: expected ';' before ')' token
+       state[j] ] switches & (1<<i));
+                                   ^
+                                   ;
+p2sw-demo.c:35:35: error: expected statement before ')' token
+p2sw-demo.c:36:6: error: subscripted value is neither array nor pointer nor vector
+ state[4]=0;
+      ^
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:34:10: error: 'j' undeclared (first use in mathis function)
+     for (j = 0; j < 4; j++)
+          ^
+p2sw-demo.c:34:10: note: each undeclared identifier is reported only once for each function it appears in
+p2sw-demo.c:36:6: error: subscripted value is neither array nor pointer nor vector
+ state[4]=0;
+      ^
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> p2sw-demo.c:34:10: error: 'j' undeclared (first use in mathis function)
+     for (j = 0; j < 4; j++)
+          ^
+p2sw-demo.c:34:10: note: each undeclared identifier is reported only once for each function it appears in
+p2sw-demo.c:36:6: error: subscripted value is neither array nor pointer nor vector
+ state[4]=0;
+      ^
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> 
+bash: syntax error near unexpected token `('
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> bash: syntax error near unexpected token `('
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> If '^' is not a typo you can use command-not-found to lookup the package that contains it, like this:
+    cnf ^
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> If 'p2sw-demo.c:34:10:' is not a typo you can use command-not-found to lookup the package that contains it, like this:
+    cnf p2sw-demo.c:34:10:
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> If 'p2sw-demo.c:36:6:' is not a typo you can use command-not-found to lookup the package that contains it, like this:
+    cnf p2sw-demo.c:36:6:
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> If '^' is not a typo you can use command-not-found to lookup the package that contains it, like this:
+    cnf ^
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> bash: builtin: No such file or directory
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> bash: syntax error near unexpected token `newline'
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:31:10: error: subscripted value is neither array nor pointer nor vector
+     state[i] = (switches & (1<<i));
+          ^
+p2sw-demo.c:33:10: error: subscripted value is neither array nor pointer nor vector
+     state[4]=0;
+          ^
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1646 bytes at c664 [section: .text]...
+Done, 3284 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1648 bytes at c664 [section: .text]...
+Done, 3286 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:37:17: error: subscripted value is neither array nor pointer nor vector
+     if (switches[i] == 1)
+                 ^
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1662 bytes at c664 [section: .text]...
+Done, 3300 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1664 bytes at c664 [section: .text]...
+Done, 3302 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make clean
+rm -f *.a *.o *.elf
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o stateMachines.o stateMachines.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1656 bytes at c664 [section: .text]...
+Done, 3294 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1656 bytes at c664 [section: .text]...
+Done, 3294 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:33:13: warning: comparison between pointer and integer
+     if (str == '_')
+             ^~
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1658 bytes at c664 [section: .text]...
+Done, 3296 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:30:13: warning: comparison between pointer and integer
+     if (str == '_')
+             ^~
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make make
+make: *** No rule to make target 'make'.  Stop.
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:30:13: error: assignment to expression with array type
+     if (str = '_')
+             ^
+make: *** [<builtin>: p2sw-demo.o] Error 1
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1656 bytes at c664 [section: .text]...
+Done, 3294 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1656 bytes at c664 [section: .text]...
+Done, 3294 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1656 bytes at c664 [section: .text]...
+Done, 3294 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:32:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+     printf(str[i]);
+     ^~~~~~
+p2sw-demo.c:32:5: warning: incompatible implicit declaration of built-in function 'printf'
+p2sw-demo.c:32:5: note: include '<stdio.h>' or provide a declaration of 'printf'
+p2sw-demo.c:10:1:
++#include <stdio.h>
+ 
+p2sw-demo.c:32:5:
+     printf(str[i]);
+     ^~~~~~
+p2sw-demo.c:32:15: warning: passing argument 1 of 'printf' makes pointer from integer without a cast [-Wint-conversion]
+     printf(str[i]);
+            ~~~^~~
+p2sw-demo.c:32:15: note: expected 'const char *' but argument is of type 'char'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1765 bytes at c000 [section: .rodata]...
+Writing  116 bytes at c6e8 [section: .rodata2]...
+Writing 4096 bytes at c75c [section: .text]...
+Writing 3642 bytes at d75c [section: .text]...
+Writing  236 bytes at e596 [section: .data]...
+Done, 9859 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1656 bytes at c664 [section: .text]...
+Done, 3294 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1656 bytes at c664 [section: .text]...
+Done, 3294 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1646 bytes at c664 [section: .text]...
+Done, 3284 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+p2sw-demo.c: In function 'main':
+p2sw-demo.c:29:43: warning: character constant too long for its type
+      str[i] = (switches & (1<<i)) ? '-' : 'switches';
+                                           ^~~~~~~~~~
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o stateMachines.o stateMachines.h -lLcd -lp2sw -lTimer
+msp430loader.sh p2sw-demo.elf
+check Bus 001 Device 006: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  p2sw-demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 006
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing 1630 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c660 [section: .rodata2]...
+Writing 1646 bytes at c664 [section: .text]...
+Done, 3284 bytes total
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> make load
+student@systems-vm:~/arch1-lcd-toy-mjbeard7/p2sw-demo> 

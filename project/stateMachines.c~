@@ -4,9 +4,7 @@
 
 void state_advance()		
 {
-  static int secCount = 0;
 
-  secCount ++;
   static char sm1 = 0;
 
   switch(sm1){

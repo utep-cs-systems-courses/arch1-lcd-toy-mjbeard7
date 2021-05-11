@@ -31,5 +31,5 @@ lcddemo2.elf: lcddemo2.o libLcd.a
 load: lcddemo.elf
 	msp430loader.sh $^
 
-load: lcddemo2.elf
+load2: lcddemo2.elf
 	msp430loader.sh $^

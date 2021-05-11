@@ -2,6 +2,8 @@
 #include <libTimer.h>
 #include "lcdutils.h"
 #include "lcddraw.h"
+#include "stateMachines.h"
+#include "p2switches.h"
 
 #define LED_GREEN BIT6             // P1.6
 

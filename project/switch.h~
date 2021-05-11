@@ -1,0 +1,5 @@
+#ifndef switch_included
+#define switch_included
+
+void state();
+#endif //included
